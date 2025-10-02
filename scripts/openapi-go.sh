@@ -1,31 +1,48 @@
-#!/bin/bash
+
+#!/usr/bin/env bash
 set -euo pipefail
 
 SERVICE_NAME=$1
 PACKAGE_NAME=${SERVICE_NAME//-/}
 BASE_DIR="$(pwd)/openapi"
+TMP_OUT="/tmp/oapi"
 
-# Directories
 SERVER_OUT="$BASE_DIR/servergen"
 CLIENT_OUT="$BASE_DIR/clientgen/go"
 
-# Clean previous output
-rm -rf "$SERVER_OUT" "$CLIENT_OUT"
-mkdir -p "$SERVER_OUT" "$CLIENT_OUT"
+rm -rf "$TMP_OUT"
+mkdir -p "$TMP_OUT"
 
-# Generate Go server
 openapi-generator-cli generate \
   -i "$BASE_DIR/${SERVICE_NAME}.yaml" \
   -g go-server \
-  -o "$SERVER_OUT" \
-  --additional-properties=packageName="${PACKAGE_NAME} --skip-validate-spec"
+  -o "$TMP_OUT" \
+  --skip-validate-spec \
+  --additional-properties=packageName="${PACKAGE_NAME}"
 
-# Generate Go client
+rm -rf "$SERVER_OUT"
+mkdir -p "$SERVER_OUT"
+mv "$TMP_OUT/go" "$SERVER_OUT"
+
+rm -rf "$TMP_OUT"
+mkdir -p "$TMP_OUT"
+
 openapi-generator-cli generate \
   -i "$BASE_DIR/${SERVICE_NAME}.yaml" \
   -g go \
-  -o "$CLIENT_OUT" \
-  --additional-properties=packageName="${PACKAGE_NAME} --skip-validate-spec"
+  -o "$TMP_OUT" \
+  --skip-validate-spec \
+  --additional-properties=packageName="${PACKAGE_NAME}"
+
+rm -rf "$CLIENT_OUT"
+mkdir -p "$CLIENT_OUT"
+mv "$TMP_OUT/"*.go "$CLIENT_OUT/"
+
+rm -rf "$TMP_OUT"
+
+cd "$BASE_DIR" || exit
+go mod tidy
+cd - > /dev/null
 
 echo "OpenAPI generation complete!"
 echo "Server code: $SERVER_OUT"
