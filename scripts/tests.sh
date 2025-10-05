@@ -1,4 +1,5 @@
 #!/bin/bash
+
 mkdir -p coverage
 go test -coverprofile coverage/cover.out -v ./...
 grep -v -E -f .covignore coverage/cover.out > coverage/coverage.filtered.out

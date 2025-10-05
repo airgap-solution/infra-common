@@ -1,4 +1,4 @@
-.PHONY: openapi tests mocks check-vars
+.PHONY: openapi tests mocks lint check-vars
 
 REQUIRED_VARS = SERVICE_NAME
 
@@ -12,3 +12,5 @@ tests:
 	@${COMMON_MK_DIR}scripts/tests.sh
 mocks:
 	@${COMMON_MK_DIR}scripts/mocks.sh
+lint:
+	@${COMMON_MK_DIR}scripts/lint.sh
