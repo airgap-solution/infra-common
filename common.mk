@@ -1,4 +1,4 @@
-.PHONY: openapi check-vars
+.PHONY: openapi tests mocks check-vars
 
 REQUIRED_VARS = SERVICE_NAME
 
@@ -10,3 +10,5 @@ openapi: check-vars
 	@${COMMON_MK_DIR}scripts/openapi-go.sh $(SERVICE_NAME)
 tests:
 	@${COMMON_MK_DIR}scripts/tests.sh
+mocks:
+	@${COMMON_MK_DIR}scripts/mocks.sh
