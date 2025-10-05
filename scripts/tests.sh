@@ -7,5 +7,5 @@ mv coverage/coverage.filtered.out coverage/cover.out
 COVERAGE="$(go tool cover -func=coverage/cover.out | grep "total" | tail -n 1 | grep -Eo '[0-9]+\.[0-9]+')"
 
 if [[ $COVERAGE != "100.0" ]] then
-    echo "coverage threshold of 100% not met"
+    echo "coverage threshold of 100% not met ($COVERAGE%)"
 fi
