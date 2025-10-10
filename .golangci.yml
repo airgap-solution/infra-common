@@ -1,0 +1,19 @@
+run:
+  timeout: 5m
+
+linters:
+  enable-all: true
+  disable:
+    - depguard
+    - wsl
+    - exhaustruct
+    - gochecknoglobals
+    - gofumpt
+    - varnamelen
+    - nlreturn
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - funlen
