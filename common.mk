@@ -8,6 +8,7 @@ check-vars:
 COMMON_MK_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 openapi: check-vars
 	@${COMMON_MK_DIR}scripts/openapi-go.sh $(SERVICE_NAME)
+	@${COMMON_MK_DIR}scripts/openapi-ts.sh $(SERVICE_NAME)
 tests: mocks
 	@${COMMON_MK_DIR}scripts/tests.sh
 mocks:

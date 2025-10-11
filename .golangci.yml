@@ -11,6 +11,7 @@ linters:
     - gofumpt
     - varnamelen
     - nlreturn
+    - gomoddirectives
 
 issues:
   exclude-rules:
