@@ -12,6 +12,7 @@ linters:
     - varnamelen
     - nlreturn
     - gomoddirectives
+    - ireturn
 
 issues:
   exclude-rules:
